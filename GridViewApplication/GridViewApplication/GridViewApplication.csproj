@@ -100,16 +100,14 @@
     <Content Include="Assets\Css\all.min.css" />
     <Content Include="Login.aspx" />
     <Content Include="Pages\UserPage.aspx" />
-    <Content Include="Pages\UserPageNew.aspx" />
     <Content Include="Web.config" />
-    <Content Include="Forms\WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\LoginDto.cs" />
+    <Compile Include="Dto\RestDepartment\rest_department.cs" />
+    <Compile Include="Dto\RestEmployee\rest_create_employee.cs" />
     <Compile Include="Dto\RestEmployee\rest_employee.cs" />
-    <Compile Include="Dto\RestLevel\rest_level.cs" />
     <Compile Include="Dto\RestLogin\rest_response_login.cs" />
-    <Compile Include="Dto\RestPosition\rest_position.cs" />
     <Compile Include="Library\Command.cs" />
     <Compile Include="Library\Connection.cs" />
     <Compile Include="Library\Util.cs" />
@@ -128,25 +126,10 @@
     <Compile Include="Pages\UserPage.aspx.designer.cs">
       <DependentUpon>UserPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\UserPageNew.aspx.cs">
-      <DependentUpon>UserPageNew.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\UserPageNew.aspx.designer.cs">
-      <DependentUpon>UserPageNew.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Forms\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\Repository1.cs" />
+    <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
-    <Compile Include="Services\PositionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

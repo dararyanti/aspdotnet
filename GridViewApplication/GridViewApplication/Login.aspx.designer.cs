@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GridViewApplication {
-    
-    
-    public partial class Login {
-        
+namespace GridViewApplication
+{
+
+
+    public partial class Login
+    {
+
         /// <summary>
         /// formLogin control.
         /// </summary>
@@ -20,16 +22,16 @@ namespace GridViewApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm formLogin;
-        
+
         /// <summary>
-        /// txtEMail control.
+        /// txtUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEMail;
-        
+        protected global::System.Web.UI.WebControls.TextBox txtUsername;
+
         /// <summary>
         /// txtPassword control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GridViewApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
-        
+
         /// <summary>
         /// btn control.
         /// </summary>

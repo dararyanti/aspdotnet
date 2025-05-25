@@ -3,16 +3,12 @@ using GridViewApplication.Dto.RestLogin;
 using GridViewApplication.Library;
 using GridViewApplication.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GridViewApplication
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class Login : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +26,7 @@ namespace GridViewApplication
             try
             {
                 LoginDto login = new LoginDto();
-                login.username = txtEMail.Text;
+                login.username = txtUsername.Text;
                 login.password = txtPassword.Text;
 
                 rest_response_login respose = LoginService.Login(login);
@@ -45,6 +41,7 @@ namespace GridViewApplication
                 cookie.Value = respose.jwtToken;
                 cookie.Expires = DateTime.Now.AddHours(3);
                 Response.SetCookie(cookie);
+                Session["Username"] = login.username;
 
                 RedirectPage();
             }
@@ -59,6 +56,7 @@ namespace GridViewApplication
         private void RedirectPage()
         {
             Response.Redirect("/Pages/UserPage.aspx",false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }

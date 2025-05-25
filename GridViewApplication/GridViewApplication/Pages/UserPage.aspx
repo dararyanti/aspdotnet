@@ -113,100 +113,171 @@
         .action-column a {
             margin-right: 5px;
         }
+        .pagination .page-item {
+            list-style: none;
+            margin-right: 5px;
+        }
+        .pagination .page-link {
+            background-color: #fff;
+            color: #000000;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #ccc;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #ccc;
+            color: #000000;
+        }
+
+        .pagination .page-link,
+        .form-select.page-link {
+            background-color: #fff;
+            color: #000000;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .pagination .page-link:hover,
+        .form-select.page-link:hover {
+            background-color: #ccc;
+            color: #000000;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <h4><b>User List</b></h4>
-        <div class="grid-view">
-            <asp:GridView ID="GvData" runat="server" AutoGenerateColumns="False" GridLines="Both" DataKeyNames="id" OnPageIndexChanging="GvData_PageIndexChanging" OnRowCancelingEdit="GvData_RowCancelingEdit" OnRowDeleting="GvData_RowDeleting" OnRowEditing="GvData_RowEditing" OnRowUpdating="Gvdata_RowUpdating"
-                AllowPaging="true"
-                ShowFooter="false"
-                PagerSettings-Visible="false"
-                PageSize="10">
-                <Columns>
-                    <asp:TemplateField HeaderText="Id" Visible="false">
-                        <ItemTemplate>
-                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("Id") %>'></asp:Label>
-                        </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:TextBox ID="txtId" runat="server" Text='<%# Eval("Id") %>' ReadOnly="true" CssClass="no-highlight"></asp:TextBox>
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                    <asp:BoundField DataField="name" HeaderText="Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
-                    <asp:BoundField DataField="email" HeaderText="Email" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
-                    <asp:BoundField DataField="phone" HeaderText="Phone No" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
-                    <asp:BoundField DataField="age" HeaderText="Age" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
-                    <asp:TemplateField HeaderText="Actions" ItemStyle-CssClass="action-column">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="btnEdit" runat="server" CommandName="Edit" CssClass="fa fa-pen-to-square edit-icon no-outline"></asp:LinkButton>
-                            <asp:LinkButton ID="btnDelete" runat="server" CommandName="Delete" CssClass="fa fa-trash delete-icon"></asp:LinkButton>
-                        </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:LinkButton ID="btnUpdate" runat="server" CommandName="Update" CssClass="fa fa-check update-icon"></asp:LinkButton>
-                            <asp:LinkButton ID="btnCancel" runat="server" CommandName="Cancel" CssClass="fa fa-xmark cancel-icon"></asp:LinkButton>
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-                <PagerStyle HorizontalAlign="Center" />
-                <PagerSettings Mode="NumericFirstLast" PageButtonCount="5" FirstPageText="First" LastPageText="Last" />
-                <SortedAscendingHeaderStyle CssClass="SortAsc" />
-                <SortedDescendingHeaderStyle CssClass="SortDesc" />
-            </asp:GridView>
-        </div>
-        <div id="dgDataPaging">
-            <div style="margin-top: 5px">
-                <ul class="pagination" style="margin-top: -1px">
-                    <asp:Repeater ID="RepeaterPage" runat="server">
-                        <ItemTemplate>
-                            <%# (Eval("PageNumber").ToString() == (GvData.PageIndex +1).ToString() ) ? "<li class=\"page-item active\">" : "<li class=\"page-item\">"  %>
-                            <asp:LinkButton ID="lbtPage" runat="server" OnClick="lbtPage_Click" CssClass="page-link" Text='<%# DataBinder.Eval(Container.DataItem, "PageNumber") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Value") %>'></asp:LinkButton>
-                            </li>
-                        </ItemTemplate>
-                    </asp:Repeater>
-                </ul>
-                <div style="float: right; margin-top: -1px" id="divshowingdatapage">
-                    <asp:Label ID="lbPage" runat="server" Text="Halaman ke-1" CssClass="PageLabel"></asp:Label>
-                </div>
-            </div>
+        <h4><b>Employee List</b></h4>
+        <asp:TextBox ID="txtSearch" runat="server" Placeholder="Search..." />
+        <asp:DropDownList ID="ddlSortColumn" runat="server">
+            <asp:ListItem Text="First Name" Value="first_name" />
+            <asp:ListItem Text="Last Name" Value="last_name" />
+            <asp:ListItem Text="Email" Value="email" />
+            <asp:ListItem Text="Hire Date" Value="hire_date" />
+            <asp:ListItem Text="Department Name" Value="department_name" />
+            <asp:ListItem Text="Created Name" Value="create_name" />
+            <asp:ListItem Text="Created Data" Value="create_date" />
+        </asp:DropDownList>
+        <asp:DropDownList ID="ddlSortDirection" runat="server">
+            <asp:ListItem Text="Ascending" Value="asc" />
+            <asp:ListItem Text="Descending" Value="desc" />
+        </asp:DropDownList>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
+       <div style="margin-top: 20px; margin-bottom: 10px;">
+            <asp:Button ID="btnCreateEmployee" runat="server" Text="Create Employee" CssClass="btn btn-primary" OnClick="btnCreateEmployee_Click" />
         </div>
 
+        <asp:Panel ID="pnlCreateEmployee" runat="server" Visible="false" CssClass="container">
+            <h5><b>Create New Employee</b></h5>
+            <table class="form-table">
+                <tr>
+                    <td><label>First Name:</label></td>
+                    <td><asp:TextBox ID="txtFirstName" runat="server" /></td>
+                </tr>
+                <tr>
+                    <td><label>Last Name:</label></td>
+                    <td><asp:TextBox ID="txtLastName" runat="server" /></td>
+                </tr>
+                <tr>
+                    <td><label>Email:</label></td>
+                    <td><asp:TextBox ID="txtEmail" runat="server" TextMode="Email" /></td>
+                    <asp:RegularExpressionValidator 
+                        ID="revEmail" 
+                        runat="server" 
+                        ControlToValidate="txtEmail"
+                        ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                        ErrorMessage="Invalid email format"
+                        ForeColor="Red"
+                        Display="Dynamic" />
+                </tr>
+                <tr>
+                    <td><label>Hire Date:</label></td>
+                    <td><asp:TextBox ID="txtHireDate" runat="server" TextMode="Date" /></td>
+                </tr>
+                <tr>
+                    <td><label>Department:</label></td>
+                    <td><asp:DropDownList ID="ddlDepartmentCreate" runat="server" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right;">
+                        <asp:Button ID="btnCancelEmployee" runat="server" Text="Cancel" OnClick="btnCancelEmployee_Click" CausesValidation="false" />
+                        <asp:Button ID="btnSaveEmployee" runat="server" Text="Save" CssClass="btn-submit" OnClick="btnSaveEmployee_Click" />
+                    </td>
+                </tr>
+            </table>
+        </asp:Panel>
+
+
+
         <div class="grid-view">
-        <asp:GridView ID="gvUser" runat="server" AutoGenerateColumns="False" GridLines="Both" DataKeyNames="id" 
-            OnPageIndexChanging="GvData_PageIndexChanging" 
-            OnRowCancelingEdit="GvUser_RowCancelingEdit" 
-            OnRowDeleting="GvUser_RowDeleting" 
-            OnRowEditing="GvUser_RowEditing" 
-            OnRowUpdating="GvUser_RowUpdating"
+        <asp:GridView ID="gvUser" runat="server" AutoGenerateColumns="False" GridLines="Both" DataKeyNames="EmployeeId" 
+            OnPageIndexChanging="gvUser_PageIndexChanging" 
+            OnRowCancelingEdit="gvUser_RowCancelingEdit" 
+            OnRowDeleting="gvUser_RowDeleting" 
+            OnRowEditing="gvUser_RowEditing" 
+            OnRowUpdating="gvUser_RowUpdating"
             OnRowDataBound="gvUser_RowDataBound"
                 AllowPaging="true"
                 ShowFooter="false"
                 PagerSettings-Visible="false"
-                PageSize="10">
+                PageSize="5">
 
                  <Columns>
                      <asp:TemplateField HeaderText="Id" Visible="false">
                          <ItemTemplate>
-                             <asp:Label ID="lblId" runat="server" Text='<%# Eval("Id") %>'></asp:Label>
+                             <asp:Label ID="lblId" runat="server" Text='<%# Eval("EmployeeId") %>'></asp:Label>
                          </ItemTemplate>
                          <EditItemTemplate>
-                             <asp:TextBox ID="txtId" runat="server" Text='<%# Eval("Id") %>' ReadOnly="true" CssClass="no-highlight"></asp:TextBox>
+                             <asp:TextBox ID="txtId" runat="server" Text='<%# Eval("EmployeeId") %>' ReadOnly="true" CssClass="no-highlight"></asp:TextBox>
                          </EditItemTemplate>
                      </asp:TemplateField>
-                     <asp:BoundField DataField="id" HeaderText="Id" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true" />
-                     <asp:BoundField DataField="name" HeaderText="Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
-                     <asp:BoundField DataField="department" HeaderText="Department" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />  
-                     <asp:BoundField DataField="position.positionName" HeaderText="Position Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true"/>
-                     <asp:BoundField DataField="level.description" HeaderText="Description" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true"/>
-
-                     <asp:TemplateField HeaderText="Position">
+                     <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
+                     <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" />
+                     
+                     <asp:TemplateField HeaderText="Email">
                         <ItemTemplate>
-                            <%# Eval("position.positionName") %>
+                            <%# Eval("Email") %>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:DropDownList ID="ddlPosition" runat="server" />
+                            <asp:TextBox ID="txtEmailEdit" runat="server" Text='<%# Bind("Email") %>' />
+                            <asp:RegularExpressionValidator 
+                                ID="revEmailEdit" 
+                                runat="server" 
+                                ControlToValidate="txtEmailEdit"
+                                ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                                ErrorMessage="Invalid email format"
+                                ForeColor="Red"
+                                Display="Dynamic" />
                         </EditItemTemplate>
                     </asp:TemplateField>
+
+                     <asp:BoundField DataField="HireDate" HeaderText="Hire Date" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true"/>
+                      <asp:TemplateField HeaderText="Department">
+                        <ItemTemplate>
+                            <%# Eval("DepartmentName") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlDepartment" runat="server" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                     <asp:BoundField DataField="CreateName" HeaderText="Created Name" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true"/>
+                     <asp:BoundField DataField="CreateDate" HeaderText="Created Date" ItemStyle-BorderWidth="1px" ItemStyle-BorderStyle="Solid" HeaderStyle-BorderWidth="1px" HeaderStyle-BorderStyle="Solid" ReadOnly="true"/>
+
+                     
 
                      <asp:TemplateField HeaderText="Actions" ItemStyle-CssClass="action-column">
                          <ItemTemplate>
@@ -225,6 +296,41 @@
                  <SortedDescendingHeaderStyle CssClass="SortDesc" />
         </asp:GridView>
         </div>
+        <div id="dgDataPaging">
+            <div style="margin-top: 5px; display: flex; align-items: center;">
+                <ul class="pagination" style="margin-top: -1px; margin-bottom: 0;">
+                    <asp:Repeater ID="Repeater1" runat="server">
+                        <ItemTemplate>
+                            <li class='<%# (bool)Eval("IsActive") ? "page-item active" : "page-item" %>'>
+                                <asp:LinkButton ID="lbtPage" runat="server"
+                                    OnClick="lbtPage_Click"
+                                    CssClass="page-link"
+                                    Text='<%# Eval("PageNumber") %>'
+                                    CommandArgument='<%# Eval("Value") %>'>
+                                </asp:LinkButton>
+                            </li>
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                    <li class="page-item">
+                        <asp:DropDownList ID="ddlPageSize" runat="server"
+                            AutoPostBack="true"
+                            CssClass="form-select page-link"
+                            OnSelectedIndexChanged="ddlPageSize_SelectedIndexChanged">
+                            <asp:ListItem Text="5" Value="5" />
+                            <asp:ListItem Text="10" Value="10" />
+                            <asp:ListItem Text="20" Value="20" />
+                            <asp:ListItem Text="50" Value="50" />
+                        </asp:DropDownList>
+                    </li>
+                </ul>
+
+                <div style="margin-left: auto;" id="divshowingdatapage">
+                    <asp:Label ID="Label1" runat="server" Text="Halaman ke-1" CssClass="PageLabel"></asp:Label>
+                </div>
+            </div>
+        </div>
+
 
     </form>
 </body>

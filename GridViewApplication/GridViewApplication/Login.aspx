@@ -82,16 +82,16 @@
             </tr>            
             <tr>
                 <td>
-                    <label for="EMail">Email:</label></td>
+                    <label for="username">Username:</label></td>
                 <td>
-                    <asp:TextBox ID="txtEMail" runat="server" TextMode="Email" Text="bhanu2@example.com" required></asp:TextBox>
+                    <asp:TextBox ID="txtUsername" runat="server" Text="admin" required></asp:TextBox>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="Password">Password:</label></td>
                 <td>
-                    <asp:TextBox ID="txtPassword" runat="server" type="password" Text="bhanu2" required></asp:TextBox></td>
+                    <asp:TextBox ID="txtPassword" runat="server" type="password" Text="admin123" required></asp:TextBox></td>
             </tr>
             <tr>
                 <td colspan="2">
